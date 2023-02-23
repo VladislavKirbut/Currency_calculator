@@ -1,6 +1,7 @@
 package teachmeskills.vlad.hw14.currencytype;
 
 public enum Currency {
+
     BYN ("Белорусский рубль"),
     USD ("Доллар США"),
     EUR ("Евро"),
