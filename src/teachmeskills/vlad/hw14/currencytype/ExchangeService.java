@@ -17,7 +17,7 @@ public class ExchangeService {
     }
 
     public BigDecimal exchange(Currency fromCurrency, BigDecimal amount, Currency toCurrency) {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0)
+        if (amount.compareTo(BigDecimal.ZERO) < 0)
             throw new IllegalArgumentException("You entered negative amount.");
 
         if (fromCurrency == toCurrency)
