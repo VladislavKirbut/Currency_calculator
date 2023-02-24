@@ -5,15 +5,17 @@ import java.math.RoundingMode;
 
 public class ExchangeService {
 
+    private static final Currency BASE_CURRENCY = Currency.BYN;
+    private static final BigDecimal RATE_OF_BASE_CURRENCY = BigDecimal.ONE;
+
     public ExchangeRate [] getTodayRates() {
         ExchangeRate usd = new ExchangeRate(Currency.USD, new BigDecimal("2.7981"));
         ExchangeRate eur = new ExchangeRate(Currency.EUR, new BigDecimal("2.9769"));
         ExchangeRate gbp = new ExchangeRate(Currency.GBP, new BigDecimal("3.3798"));
         ExchangeRate rub = new ExchangeRate(Currency.RUB, new BigDecimal("0.037604"));
         ExchangeRate cny = new ExchangeRate(Currency.CNY, new BigDecimal("0.40730"));
-        ExchangeRate byn = new ExchangeRate(Currency.BYN, new BigDecimal("1.0"));
 
-        return new ExchangeRate[] {usd, eur, gbp, rub, cny, byn};
+        return new ExchangeRate[] {usd, eur, gbp, rub, cny};
     }
 
     public BigDecimal exchange(Currency fromCurrency, BigDecimal amount, Currency toCurrency) {
@@ -24,19 +26,19 @@ public class ExchangeService {
             return amount;
 
         ExchangeRate[] todayRates = this.getTodayRates();
-        BigDecimal resultCurrency = amount;
 
-        for (int i = 0; i < todayRates.length; i++) {
-            if (todayRates[i].getCurrencyType() == fromCurrency) {
-                resultCurrency = resultCurrency.multiply(todayRates[i].getCourse());
-                break;
-            }
-        }
+        BigDecimal bynCurrency = amount.multiply(getRate(todayRates, fromCurrency));
+        return bynCurrency.divide(getRate(todayRates, toCurrency), 10, RoundingMode.HALF_UP);
+    }
+
+    public static BigDecimal getRate(ExchangeRate[] todayRates, Currency currency) {
+        if (currency == BASE_CURRENCY)
+            return RATE_OF_BASE_CURRENCY;
 
         for (int i = 0; i < todayRates.length; i++)
-            if (todayRates[i].getCurrencyType() == toCurrency)
-                resultCurrency = resultCurrency.divide(todayRates[i].getCourse(), 10, RoundingMode.HALF_UP);
+            if (todayRates[i].getCurrencyType() == currency)
+                return todayRates[i].getCourse();
 
-        return resultCurrency;
+        throw new IllegalArgumentException("Incorrect parameters");
     }
 }

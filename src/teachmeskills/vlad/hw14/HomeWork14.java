@@ -41,8 +41,8 @@ public class HomeWork14 {
                     String finalCurrency = scanner.next();
 
                     BigDecimal result = service.exchange(Currency.valueOf(sourceCurrency),
-                            new BigDecimal(amount),
-                            Currency.valueOf(finalCurrency));
+                                                         new BigDecimal(amount),
+                                                         Currency.valueOf(finalCurrency));
 
                     System.out.println(finalCurrency + ": " + result);
                 }
