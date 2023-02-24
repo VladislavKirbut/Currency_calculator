@@ -1,4 +1,5 @@
 package teachmeskills.vlad.hw14.currencytype;
+import java.lang.Enum;
 
 public enum Currency {
 
