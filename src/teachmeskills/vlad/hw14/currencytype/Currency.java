@@ -15,7 +15,7 @@ public enum Currency {
         this.russianNameOfCurrency = russianNameOfCurrency;
     }
 
-    public String getNumericValue() {
+    public String getRussianName() {
         return russianNameOfCurrency;
     }
 }

@@ -3,19 +3,21 @@ package teachmeskills.vlad.hw14.currencytype;
 import java.math.BigDecimal;
 
 public class ExchangeRate {
-    private Currency currencyType;
-    private BigDecimal course;
+    private final Currency CURRENCY_TYPE;
+    private final BigDecimal COURSE;
 
     ExchangeRate(Currency currencyType, BigDecimal course) {
-        this.currencyType = currencyType;
-        this.course = course;
+        this.CURRENCY_TYPE = currencyType;
+        if (course.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("The exchange rate cannot be negative or zero.");
+        else this.COURSE = course;
     }
 
     public Currency getCurrencyType() {
-        return currencyType;
+        return CURRENCY_TYPE;
     }
 
     public BigDecimal getCourse() {
-        return course;
+        return COURSE;
     }
 }

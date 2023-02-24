@@ -11,32 +11,27 @@ public class ExchangeService {
         ExchangeRate gbp = new ExchangeRate(Currency.GBP, new BigDecimal("3.3798"));
         ExchangeRate rub = new ExchangeRate(Currency.RUB, new BigDecimal("0.037604"));
         ExchangeRate cny = new ExchangeRate(Currency.CNY, new BigDecimal("0.40730"));
+        ExchangeRate byn = new ExchangeRate(Currency.BYN, new BigDecimal("1.0"));
 
-        return new ExchangeRate[] {usd, eur, gbp, rub, cny};
+        return new ExchangeRate[] {usd, eur, gbp, rub, cny, byn};
     }
 
     public BigDecimal exchange(Currency fromCurrency, BigDecimal amount, Currency toCurrency) {
-        if (amount.compareTo(new BigDecimal(0)) < 0)
+        if (amount.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException("You entered negative amount.");
 
         if (fromCurrency == toCurrency)
             return amount;
 
-        ExchangeService service = new ExchangeService();
-        ExchangeRate[] todayRates = service.getTodayRates();
-
+        ExchangeRate[] todayRates = this.getTodayRates();
         BigDecimal resultCurrency = amount;
 
         for (int i = 0; i < todayRates.length; i++) {
-            if (fromCurrency == Currency.BYN) break;
             if (todayRates[i].getCurrencyType() == fromCurrency) {
                 resultCurrency = resultCurrency.multiply(todayRates[i].getCourse());
                 break;
             }
         }
-
-        if (toCurrency == Currency.BYN)
-            return resultCurrency;
 
         for (int i = 0; i < todayRates.length; i++)
             if (todayRates[i].getCurrencyType() == toCurrency)
