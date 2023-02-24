@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 public class ExchangeService {
 
-    public static ExchangeRate [] getTodayRates() {
+    public ExchangeRate [] getTodayRates() {
         ExchangeRate usd = new ExchangeRate(Currency.USD, new BigDecimal("2.7981"));
         ExchangeRate eur = new ExchangeRate(Currency.EUR, new BigDecimal("2.9769"));
         ExchangeRate gbp = new ExchangeRate(Currency.GBP, new BigDecimal("3.3798"));
@@ -22,7 +22,8 @@ public class ExchangeService {
         if (fromCurrency == toCurrency)
             return amount;
 
-        ExchangeRate[] todayRates = ExchangeService.getTodayRates();
+        ExchangeService service = new ExchangeService();
+        ExchangeRate[] todayRates = service.getTodayRates();
 
         BigDecimal resultCurrency = amount;
 
