@@ -1,4 +1,8 @@
-package teachmeskills.vlad.hw14.currencytype;
+package teachmeskills.vlad.hw14;
+
+import teachmeskills.vlad.hw14.currencytype.Currency;
+import teachmeskills.vlad.hw14.currencytype.ExchangeRate;
+import teachmeskills.vlad.hw14.currencytype.ExchangeService;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -20,10 +24,10 @@ public class HomeWork14 {
 
             switch (taskNumber) {
                 case 1 -> {
-                    System.out.printf("%s %20s %12s\n", "Currency", "Code", "Course");
+                    System.out.printf("%-24s %-10s %s\n", "Currency", "Code", "Course");
 
                     for (ExchangeRate rate : service.getTodayRates()) {
-                        System.out.printf("%-24s %-10s %s\n", rate.getCurrencyType().getRussianName(),
+                        System.out.printf("%-24s %-10s %f\n", rate.getCurrencyType().getRussianName(),
                                                               rate.getCurrencyType(),
                                                               rate.getCourse());
                     }
